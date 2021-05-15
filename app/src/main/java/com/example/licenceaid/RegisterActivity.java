@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    private static final String TAG = "TAG";
+    private static final String TAG = "RegisterActivity";
     EditText mFullName, mEmail, mPassword;
     Button mRegisterBtn;
     TextView mLoginBtn;
@@ -66,16 +66,16 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         fStore = FirebaseFirestore.getInstance();
 
         if(fAuth.getCurrentUser() != null){
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            startActivity(new Intent(getApplicationContext(),MainStudentActivity.class));
             finish();
         }
 
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String email = mEmail.getText().toString().trim();
+                String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
-                final String fullName = mFullName.getText().toString();
+                String fullName = mFullName.getText().toString();
 
 
                 if(TextUtils.isEmpty(email)){
@@ -103,17 +103,17 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                             // send verification link
 
                             FirebaseUser fuser = fAuth.getCurrentUser();
-                            fuser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(RegisterActivity.this, "Verification Email Has been Sent.", Toast.LENGTH_SHORT).show();
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d(TAG, "onFailure: Email not sent " + e.getMessage());
-                                }
-                            });
+//                            fuser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                @Override
+//                                public void onSuccess(Void aVoid) {
+//                                    Toast.makeText(RegisterActivity.this, "Verification Email Has been Sent.", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }).addOnFailureListener(new OnFailureListener() {
+//                                @Override
+//                                public void onFailure(@NonNull Exception e) {
+//                                    Log.d(TAG, "onFailure: Email not sent " + e.getMessage());
+//                                }
+//                            });
 
                             Toast.makeText(RegisterActivity.this, "User Created.", Toast.LENGTH_SHORT).show();
                             userID = fAuth.getCurrentUser().getUid();
@@ -121,6 +121,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                             Map<String,Object> user = new HashMap<>();
                             user.put("fName",fullName);
                             user.put("email",email);
+                            user.put("userType",userType);
                             
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -133,7 +134,17 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                                     Log.d(TAG, "onFailure: " + e.toString());
                                 }
                             });
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+                            if(userType == "Student"){
+                                startActivity(new Intent(getApplicationContext(),MainStudentActivity.class));
+                            }
+                            else if(userType == "Admin"){
+                                Log.d(TAG,"Admin user");
+                            }
+                            else if(userType == "Professor"){
+                                Log.d(TAG,"Professor user");
+                            }
+
 
                         }else {
                             Toast.makeText(RegisterActivity.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
