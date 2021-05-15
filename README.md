@@ -1,6 +1,5 @@
 # LicenceAid
-LicenceAid
-LicenseAid is a platform that comes to the aid of graduating students who are faced with something new to them - the state of the art. To do this, they must do extensive research to find information that helps them write their licenses. The requests for such an application are as follows:
+LicenceAid is a platform that comes to the aid of graduating students who are faced with something new to them - the state of the art. To do this, they must do extensive research to find information that helps them write their licenses. The requests for such an application are as follows:
 
 • The platform must have different roles, with the possibility of a corresponding login for each: teacher, student, admin;
 
