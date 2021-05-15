@@ -5,30 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".MainActivity">
+    tools:context=".MainStudentActivity">
 
     <TextView
-        android:id="@+id/studentSpecialisation"
+        android:id="@+id/mainSpecialisation"
         android:layout_width="366dp"
         android:layout_height="33dp"
         android:layout_marginStart="26dp"
         android:layout_marginTop="340dp"
-        android:text="TextView"
+        android:text="Specialisation"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/studentEmail"
+        android:id="@+id/mainEmail"
         android:layout_width="176dp"
         android:layout_height="35dp"
         android:layout_marginStart="149dp"
         android:layout_marginTop="151dp"
-        android:text="TextView"
+        android:text="Email"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/profileImage"
         android:layout_width="106dp"
         android:layout_height="86dp"
         android:layout_marginStart="13dp"
@@ -72,12 +74,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/studentFullName"
+        android:id="@+id/mainFullName"
         android:layout_width="176dp"
         android:layout_height="35dp"
         android:layout_marginStart="149dp"
         android:layout_marginTop="99dp"
-        android:text="TextView"
+        android:text="Name"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -106,12 +109,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/studentInterests"
+        android:id="@+id/mainInterests"
         android:layout_width="366dp"
         android:layout_height="33dp"
         android:layout_marginStart="26dp"
         android:layout_marginTop="249dp"
-        android:text="TextView"
+        android:text="Interests"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
