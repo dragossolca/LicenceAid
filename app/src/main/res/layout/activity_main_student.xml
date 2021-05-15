@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/mainEmail"
+        android:id="@+id/mainEmailAddress"
         android:layout_width="176dp"
         android:layout_height="35dp"
         android:layout_marginStart="149dp"

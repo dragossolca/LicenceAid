@@ -137,12 +137,15 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
                             if(userType == "Student"){
                                 startActivity(new Intent(getApplicationContext(),MainStudentActivity.class));
+                                finish();
                             }
                             else if(userType == "Admin"){
-                                Log.d(TAG,"Admin user");
+                                startActivity(new Intent(getApplicationContext(),MainAdminActivity.class));
+                                finish();
                             }
                             else if(userType == "Professor"){
-                                Log.d(TAG,"Professor user");
+                                startActivity(new Intent(getApplicationContext(),MainProfessorActivity.class));
+                                finish();
                             }
 
 

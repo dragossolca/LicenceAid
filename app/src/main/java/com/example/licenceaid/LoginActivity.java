@@ -160,10 +160,12 @@ public class LoginActivity extends AppCompatActivity {
                    finish();
                 }
                 else if(documentSnapshot.getString("userType").equals("Admin")){
-                    Toast.makeText(LoginActivity.this,"Admin type",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(),MainAdminActivity.class));
+                    finish();
                 }
                 else if(documentSnapshot.getString("userType").equals("Professor")){
-                    Toast.makeText(LoginActivity.this,"Professor type",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(),MainProfessorActivity.class));
+                    finish();
                 }
             }
 

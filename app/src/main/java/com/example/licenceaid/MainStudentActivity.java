@@ -49,10 +49,10 @@ public class MainStudentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_student);
 
-        fullName = findViewById(R.id.profileFullName);
-        email = findViewById(R.id.profileEmailAddress);
-        interests = findViewById(R.id.profileInterests);
-        specialisation = findViewById(R.id.profileSpecialisation);
+        fullName = findViewById(R.id.mainFullName);
+        email = findViewById(R.id.mainEmailAddress);
+        interests = findViewById(R.id.mainInterests);
+        specialisation = findViewById(R.id.mainSpecialisation);
         //resetPassLocal = findViewById(R.id.resetPasswordLocal);
 
         logoutBtn = findViewById(R.id.logoutBtn);
