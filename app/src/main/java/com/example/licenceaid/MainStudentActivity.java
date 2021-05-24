@@ -38,7 +38,7 @@ public class MainStudentActivity extends AppCompatActivity {
     String userId;
     Button resendCode;
     Button logoutBtn;
-    Button resetPassLocal, changeProfileImage;
+    Button resetPassLocal, changeProfile;
     FirebaseUser user;
     ImageView profileImage;
     StorageReference storageReference;
@@ -58,7 +58,7 @@ public class MainStudentActivity extends AppCompatActivity {
         logoutBtn = findViewById(R.id.logoutBtn);
 
         profileImage = findViewById(R.id.profileImage);
-        changeProfileImage = findViewById(R.id.changeProfile);
+        changeProfile = findViewById(R.id.changeProfile);
 
 
         fAuth = FirebaseAuth.getInstance();
@@ -169,7 +169,7 @@ public class MainStudentActivity extends AppCompatActivity {
 //            }
 //        });
 //
-        changeProfileImage.setOnClickListener(new View.OnClickListener() {
+        changeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // open gallery
