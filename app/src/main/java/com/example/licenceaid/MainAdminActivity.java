@@ -72,8 +72,8 @@ public class MainAdminActivity extends AppCompatActivity {
         //verifyMsg = findViewById(R.id.verifyMsg);
 
 
-        //userId = fAuth.getCurrentUser().getUid();
-        //user = fAuth.getCurrentUser();
+        userId = fAuth.getCurrentUser().getUid();
+        user = fAuth.getCurrentUser();
 
 //        if (!user.isEmailVerified()) {
 //            //verifyMsg.setVisibility(View.VISIBLE);
@@ -103,14 +103,17 @@ public class MainAdminActivity extends AppCompatActivity {
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                if (documentSnapshot.exists()) {
+                if(e == null) {
+                    if (documentSnapshot.exists()) {
 
-                    fullName.setText(documentSnapshot.getString("fName"));
-                    email.setText(documentSnapshot.getString("email"));
+                        fullName.setText(documentSnapshot.getString("fName"));
+                        email.setText(documentSnapshot.getString("email"));
 
-                } else {
-                    Log.d("tag", "onEvent: Document does not exist");
+                    } else {
+                        Log.d("tag", "onEvent: Document does not exist");
+                    }
                 }
+
             }
         });
 
