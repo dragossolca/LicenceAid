@@ -27,9 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -122,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                             user.put("fName",fullName);
                             user.put("email",email);
                             user.put("userType",userType);
-                            
+
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
@@ -136,22 +134,26 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                             });
 
                             if(userType == "Student"){
-                                startActivity(new Intent(getApplicationContext(),MainStudentActivity.class));
-                                finish();
+                                Toast.makeText(RegisterActivity.this, "Student start", Toast.LENGTH_SHORT).show();
+                                //startActivity(new Intent(getApplicationContext(),MainStudentActivity.class));
+                                //finish();
                             }
                             else if(userType == "Admin"){
-                                startActivity(new Intent(getApplicationContext(),MainAdminActivity.class));
-                                finish();
+                                Toast.makeText(RegisterActivity.this, "Admin start", Toast.LENGTH_SHORT).show();
+                                //startActivity(new Intent(getApplicationContext(),MainAdminActivity.class));
+                                //finish();
                             }
                             else if(userType == "Professor"){
-                                startActivity(new Intent(getApplicationContext(),MainProfessorActivity.class));
-                                finish();
+                                Toast.makeText(RegisterActivity.this, "Professor start", Toast.LENGTH_SHORT).show();
+
+                                //startActivity(new Intent(getApplicationContext(),MainProfessorActivity.class));
+                                //finish();
                             }
 
 
                         }else {
                             Toast.makeText(RegisterActivity.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            
+
                         }
                     }
                 });

@@ -20,7 +20,7 @@
 
     <TextView
         android:id="@+id/mainEmailAddress"
-        android:layout_width="176dp"
+        android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_marginStart="149dp"
         android:layout_marginTop="151dp"
@@ -75,8 +75,8 @@
 
     <TextView
         android:id="@+id/mainFullName"
-        android:layout_width="176dp"
-        android:layout_height="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="149dp"
         android:layout_marginTop="99dp"
         android:text="Name"
@@ -91,7 +91,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="209dp"
         android:text="Interests"
-        android:textColor="@color/black"
+        android:textColor="@android:color/holo_blue_dark"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -103,7 +103,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="298dp"
         android:text="Specialisation"
-        android:textColor="@color/black"
+        android:textColor="@android:color/holo_blue_dark"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -123,20 +123,24 @@
         android:id="@+id/studentsBtn"
         android:layout_width="98dp"
         android:layout_height="47dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="12dp"
         android:background="@android:color/holo_blue_light"
         android:text="My Students"
         android:textSize="12sp"
-        tools:layout_editor_absoluteX="294dp"
-        tools:layout_editor_absoluteY="198dp" />
+        app:layout_constraintStart_toEndOf="@+id/changeProfile"
+        app:layout_constraintTop_toBottomOf="@+id/mainEmailAddress" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="98dp"
-        android:layout_height="47dp"
+        android:id="@+id/changeProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="149dp"
+        android:layout_marginTop="12dp"
         android:background="@android:color/holo_blue_light"
         android:text="Change Profile"
         android:textSize="12sp"
-        tools:layout_editor_absoluteX="149dp"
-        tools:layout_editor_absoluteY="198dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainEmailAddress" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
