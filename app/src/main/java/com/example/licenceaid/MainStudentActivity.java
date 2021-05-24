@@ -57,8 +57,8 @@ public class MainStudentActivity extends AppCompatActivity {
 
         logoutBtn = findViewById(R.id.logoutBtn);
 
-        //profileImage = findViewById(R.id.profileImage);
-        //changeProfileImage = findViewById(R.id.changeProfile);
+        profileImage = findViewById(R.id.profileImage);
+        changeProfileImage = findViewById(R.id.changeProfile);
 
 
         fAuth = FirebaseAuth.getInstance();
@@ -79,8 +79,8 @@ public class MainStudentActivity extends AppCompatActivity {
         //verifyMsg = findViewById(R.id.verifyMsg);
 
 
-        //userId = fAuth.getCurrentUser().getUid();
-        //user = fAuth.getCurrentUser();
+        userId = fAuth.getCurrentUser().getUid();
+        user = fAuth.getCurrentUser();
 
 //        if (!user.isEmailVerified()) {
 //            //verifyMsg.setVisibility(View.VISIBLE);
@@ -106,20 +106,25 @@ public class MainStudentActivity extends AppCompatActivity {
 //        }
 //
 //
-//        DocumentReference documentReference = fStore.collection("users").document(userId);
-//        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-//                if (documentSnapshot.exists()) {
-//
-//                    fullName.setText(documentSnapshot.getString("fName"));
-//                    email.setText(documentSnapshot.getString("email"));
-//
-//                } else {
-//                    Log.d("tag", "onEvent: Document does not exist");
-//                }
-//            }
-//        });
+        DocumentReference documentReference = fStore.collection("users").document(userId);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if(e == null) {
+                    if (documentSnapshot.exists()) {
+
+                        fullName.setText(documentSnapshot.getString("fName"));
+                        email.setText(documentSnapshot.getString("email"));
+                        interests.setText(documentSnapshot.getString("interests"));
+                        specialisation.setText(documentSnapshot.getString("specialisation"));
+
+                    } else {
+                        Log.d("tag", "onEvent: Document does not exist");
+                    }
+                }
+
+            }
+        });
 
 
 //        resetPassLocal.setOnClickListener(new View.OnClickListener() {
@@ -164,20 +169,20 @@ public class MainStudentActivity extends AppCompatActivity {
 //            }
 //        });
 //
-//        changeProfileImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // open gallery
-//                Intent i = new Intent(v.getContext(), EditProfileActivity.class);
-//                i.putExtra("fullName", fullName.getText().toString());
-//                i.putExtra("email", email.getText().toString());
-//                i.putExtra("interests", interests.getText().toString());
-//                i.putExtra("specialisation", specialisation.getText().toString());
-//                startActivity(i);
-//
-//
-//            }
-//        });
+        changeProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // open gallery
+                Intent i = new Intent(v.getContext(), EditProfileActivity.class);
+                i.putExtra("fullName", fullName.getText().toString());
+                i.putExtra("email", email.getText().toString());
+                i.putExtra("interests", interests.getText().toString());
+                i.putExtra("specialisation", specialisation.getText().toString());
+                startActivity(i);
+
+
+            }
+        });
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

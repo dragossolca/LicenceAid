@@ -66,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         fStore = FirebaseFirestore.getInstance();
 
         if(fAuth.getCurrentUser() != null){
-            startActivity(new Intent(getApplicationContext(),MainStudentActivity.class));
+            startActivity(new Intent(getApplicationContext(),MainAdminActivity.class));
             finish();
         }
 

@@ -52,8 +52,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="409dp"
-        android:layout_height="334dp"
+        android:layout_width="416dp"
+        android:layout_height="336dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="392dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -118,5 +118,25 @@
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/studentsBtn"
+        android:layout_width="98dp"
+        android:layout_height="47dp"
+        android:background="@android:color/holo_blue_light"
+        android:text="My Students"
+        android:textSize="12sp"
+        tools:layout_editor_absoluteX="294dp"
+        tools:layout_editor_absoluteY="198dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="98dp"
+        android:layout_height="47dp"
+        android:background="@android:color/holo_blue_light"
+        android:text="Change Profile"
+        android:textSize="12sp"
+        tools:layout_editor_absoluteX="149dp"
+        tools:layout_editor_absoluteY="198dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
