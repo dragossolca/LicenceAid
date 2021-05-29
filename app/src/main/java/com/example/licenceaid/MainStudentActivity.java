@@ -21,6 +21,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -39,9 +44,11 @@ public class MainStudentActivity extends AppCompatActivity {
     Button logoutBtn;
     Button changeProfile;
     Button listBtn;
+    Button viewMaterialsBtn;
     FirebaseUser user;
     ImageView profileImage;
     StorageReference storageReference;
+    DatabaseReference databaseReference;
 
 
     @Override
@@ -53,13 +60,14 @@ public class MainStudentActivity extends AppCompatActivity {
         email = findViewById(R.id.mainEmailAddress);
         interests = findViewById(R.id.mainInterests);
         specialisation = findViewById(R.id.mainSpecialisation);
-        //resetPassLocal = findViewById(R.id.resetPasswordLocal);
+
 
         logoutBtn = findViewById(R.id.logoutBtn);
 
         profileImage = findViewById(R.id.profileImage);
         changeProfile = findViewById(R.id.changeProfile);
         listBtn = findViewById(R.id.listBtn);
+        viewMaterialsBtn = findViewById(R.id.viewMaterialsBtn);
 
 
         fAuth = FirebaseAuth.getInstance();
@@ -83,30 +91,7 @@ public class MainStudentActivity extends AppCompatActivity {
         userId = fAuth.getCurrentUser().getUid();
         user = fAuth.getCurrentUser();
 
-//        if (!user.isEmailVerified()) {
-//            //verifyMsg.setVisibility(View.VISIBLE);
-//            //resendCode.setVisibility(View.VISIBLE);
-//
-//            resendCode.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(final View v) {
-//
-//                    user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-//                        @Override
-//                        public void onSuccess(Void aVoid) {
-//                            Toast.makeText(v.getContext(), "Verification Email Has been Sent.", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Log.d("tag", "onFailure: Email not sent " + e.getMessage());
-//                        }
-//                    });
-//                }
-//            });
-//        }
-//
-//
+
         DocumentReference documentReference = fStore.collection("users").document(userId);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
@@ -128,48 +113,6 @@ public class MainStudentActivity extends AppCompatActivity {
         });
 
 
-//        resetPassLocal.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                final EditText resetPassword = new EditText(v.getContext());
-//
-//                final AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
-//                passwordResetDialog.setTitle("Reset Password ?");
-//                passwordResetDialog.setMessage("Enter New Password > 6 Characters long.");
-//                passwordResetDialog.setView(resetPassword);
-//
-//                passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        // extract the email and send reset link
-//                        String newPassword = resetPassword.getText().toString();
-//                        user.updatePassword(newPassword).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                            @Override
-//                            public void onSuccess(Void aVoid) {
-//                                Toast.makeText(MainStudentActivity.this, "Password Reset Successfully.", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }).addOnFailureListener(new OnFailureListener() {
-//                            @Override
-//                            public void onFailure(@NonNull Exception e) {
-//                                Toast.makeText(MainStudentActivity.this, "Password Reset Failed.", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                    }
-//                });
-//
-//                passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        // close
-//                    }
-//                });
-//
-//                passwordResetDialog.create().show();
-//
-//            }
-//        });
-//
         changeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,6 +127,18 @@ public class MainStudentActivity extends AppCompatActivity {
 
             }
         });
+
+
+
+        // After clicking here alert box will come
+        viewMaterialsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                startActivity(new Intent(getApplicationContext(), ViewerPDF.class));
+            }
+        });
+
+
         listBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

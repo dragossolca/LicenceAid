@@ -1,23 +1,36 @@
 package com.example.licenceaid;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.Nullable;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.OnProgressListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class MainAdminActivity extends AppCompatActivity {
     private static final int GALLERY_INTENT_CODE = 1023;
@@ -27,7 +40,10 @@ public class MainAdminActivity extends AppCompatActivity {
     String userId;
     Button logoutBtn;
     Button createAccountBtn, deleteAccountBtn;
+    Button addMaterialBtn;
     FirebaseUser user;
+    StorageReference storageReference;
+    DatabaseReference databaseReference;
 
 
 
@@ -39,50 +55,23 @@ public class MainAdminActivity extends AppCompatActivity {
         fullName = findViewById(R.id.mainFullName);
         email = findViewById(R.id.mainEmailAddress);
 
-        //resetPassLocal = findViewById(R.id.resetPasswordLocal);
+
         createAccountBtn = findViewById(R.id.createAccountBtn);
         deleteAccountBtn = findViewById(R.id.deleteAccountBtn);
+
+        addMaterialBtn = findViewById(R.id.addMaterialBtn);
         logoutBtn = findViewById(R.id.logoutBtn);
 
-
+        storageReference = FirebaseStorage.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference("uploads");
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
-
-
-
-        //resendCode = findViewById(R.id.resendCode);
-        //verifyMsg = findViewById(R.id.verifyMsg);
-
-
         userId = fAuth.getCurrentUser().getUid();
         user = fAuth.getCurrentUser();
 
-//        if (!user.isEmailVerified()) {
-//            //verifyMsg.setVisibility(View.VISIBLE);
-//            //resendCode.setVisibility(View.VISIBLE);
-//
-//            resendCode.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(final View v) {
-//
-//                    user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-//                        @Override
-//                        public void onSuccess(Void aVoid) {
-//                            Toast.makeText(v.getContext(), "Verification Email Has been Sent.", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Log.d("tag", "onFailure: Email not sent " + e.getMessage());
-//                        }
-//                    });
-//                }
-//            });
-//        }
-//
-//
+
         DocumentReference documentReference = fStore.collection("users").document(userId);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
@@ -102,55 +91,24 @@ public class MainAdminActivity extends AppCompatActivity {
         });
 
 
-//        resetPassLocal.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                final EditText resetPassword = new EditText(v.getContext());
-//
-//                final AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
-//                passwordResetDialog.setTitle("Reset Password ?");
-//                passwordResetDialog.setMessage("Enter New Password > 6 Characters long.");
-//                passwordResetDialog.setView(resetPassword);
-//
-//                passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        // extract the email and send reset link
-//                        String newPassword = resetPassword.getText().toString();
-//                        user.updatePassword(newPassword).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                            @Override
-//                            public void onSuccess(Void aVoid) {
-//                                Toast.makeText(MainStudentActivity.this, "Password Reset Successfully.", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }).addOnFailureListener(new OnFailureListener() {
-//                            @Override
-//                            public void onFailure(@NonNull Exception e) {
-//                                Toast.makeText(MainStudentActivity.this, "Password Reset Failed.", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                    }
-//                });
-//
-//                passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        // close
-//                    }
-//                });
-//
-//                passwordResetDialog.create().show();
-//
-//            }
-//        });
-//
+
         createAccountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(i);
+                //FirebaseAuth.getInstance().signOut();//logout
+                startActivity(new Intent(v.getContext(), RegisterActivity.class));
+                finish();
             }
         });
+
+        addMaterialBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectPdfFile();
+            }
+        });
+
+
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,5 +118,45 @@ public class MainAdminActivity extends AppCompatActivity {
             }
         });
     }
+    public void selectPdfFile() {
+        Intent it = new Intent();
+        it.setType("application/pdf");
+        it.setAction(Intent.ACTION_GET_CONTENT);
+        //to send on firebase and firebase store on its storage
+        startActivityForResult(Intent.createChooser(it, "Select PDF File"), 1);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            uploadPDFFile(data.getData());
+        }
+    }
+
+    private void uploadPDFFile(Uri data) {
+        StorageReference reference = storageReference.child("uploads/"+System.currentTimeMillis()+".pdf");
+        reference.putFile(data)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        //Store the name and uri of book in real time
+                        Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
+                        while (!uri.isComplete()) ;
+                        Uri url = uri.getResult();
+                        UploadPDF uploadPDF = new UploadPDF(url.toString());
+                        databaseReference.child(databaseReference.push().getKey()).setValue(uploadPDF);
+                        Toast.makeText(MainAdminActivity.this, "File Uploaded", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+    }
 }
+
+
+
+
+
 

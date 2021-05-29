@@ -83,7 +83,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
-        android:text="Have an account? Click here to login"
+        android:text="Back to Login Menu"
         android:textAlignment="center"
         android:textColor="@android:color/holo_blue_light"
         android:textSize="18sp"

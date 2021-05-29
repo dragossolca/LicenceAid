@@ -34,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     private static final String TAG = "RegisterActivity";
     EditText mFullName, mEmail, mPassword;
     Button mRegisterBtn;
-    TextView mLoginBtn;
+    TextView backBtn;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
@@ -52,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
         mRegisterBtn = findViewById(R.id.registerBtn);
-        mLoginBtn = findViewById(R.id.loginText);
+        backBtn = findViewById(R.id.loginText);
         userSelectType = findViewById(R.id.userType);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.user_types_array, android.R.layout.simple_spinner_item);
@@ -63,10 +63,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 
-        if(fAuth.getCurrentUser() != null){
-            startActivity(new Intent(getApplicationContext(),MainAdminActivity.class));
-            finish();
-        }
+
 
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,22 +130,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                                 }
                             });
 
-                            if(userType == "Student"){
-                                Toast.makeText(RegisterActivity.this, "Student start", Toast.LENGTH_SHORT).show();
-                                //startActivity(new Intent(getApplicationContext(),MainStudentActivity.class));
-                                //finish();
-                            }
-                            else if(userType == "Admin"){
-                                Toast.makeText(RegisterActivity.this, "Admin start", Toast.LENGTH_SHORT).show();
-                                //startActivity(new Intent(getApplicationContext(),MainAdminActivity.class));
-                                //finish();
-                            }
-                            else if(userType == "Professor"){
-                                Toast.makeText(RegisterActivity.this, "Professor start", Toast.LENGTH_SHORT).show();
 
-                                //startActivity(new Intent(getApplicationContext(),MainProfessorActivity.class));
-                                //finish();
-                            }
 
 
                         }else {
@@ -169,7 +151,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
 
 
-        mLoginBtn.setOnClickListener(new View.OnClickListener() {
+        backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),LoginActivity.class));
