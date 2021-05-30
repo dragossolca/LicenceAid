@@ -43,15 +43,11 @@ public class ViewerPDF extends AppCompatActivity {
         setContentView(R.layout.activity_viewer_pdf);
 
         myPDFList=(ListView) findViewById(R.id.listView);
-
-
-
         viewPdfList();
         //for open files
         myPDFList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
                 UploadPDF uploadPDF = uploadPDFs.get(i);
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setDataAndType(Uri.parse(uploadPDF.getUrl()), "application/pdf");
@@ -62,8 +58,6 @@ public class ViewerPDF extends AppCompatActivity {
                 } catch (ActivityNotFoundException e) {
                     // Instruct the user to install a PDF reader here, or something
                 }
-
-
                 startActivity(intent);
 
             }
@@ -95,7 +89,6 @@ public class ViewerPDF extends AppCompatActivity {
                         View view = super.getView(position, convertView, parent);
                         TextView text = (TextView) view.findViewById(android.R.id.text1);
                         text.setTextColor(Color.WHITE);
-
                         return view;
                     }
                 };
